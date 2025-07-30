@@ -1,0 +1,28 @@
+[user]
+	name = Varun Gandhi
+	email = varun.gandhi@sourcegraph.com
+[merge]
+	conflictstyle = diff3
+[init]
+	defaultBranch = main
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[alias]
+    co = checkout
+	pf = push --force-with-lease
+	ca = commit --amend
+	can = commit --amend --no-edit
+	get-main = ! "git rev-parse --abbrev-ref origin/HEAD | sed -e 's|origin/||'"
+	up = ! "git rebase --interactive --autostash --autosquash $(git get-main) && git restack"
+	up-main = ! "git worktree add ../tmp $(git get-main) && cd ../tmp && git pull --ff-only && cd - && git worktree remove ../tmp"
+	delete-squashed = "!f() { local targetBranch=${1:-main} && git checkout -q $targetBranch && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done; }; f"
+	retop = "!f() { \n    if [ $(git rev-parse --abbrev-ref HEAD) = \"HEAD\" ]; then\n        echo \"Error: current HEAD does not point to a branch\" >&2\n        return 1\n    fi\n    if ! git rev-parse --verify \"$1\" >/dev/null 2>&1; then \n        echo \"Error: $1 does not correspond to a valid branch\" >&2\n        return 1\n    fi\n    git rebase --onto \"$1\" HEAD~$2 $(git symbolic-ref --short HEAD)\n}; f"
+	rewind = "!f() { git diff --cached \"$@\" | git apply -R --index; }; f"
+	copy-msg = ! "git log -1 --format=\"%b\" | pbcopy"
+[pull]
+	ff = true
+	agg = "!f() { git log --shortstat \"$@\" | grep 'files changed' | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print \"files changed:\", files, \"(+\" inserted \",-\" deleted \")\"}'; }; f"
+[rerere]
+	enabled = true
+; [rebase]
+;     instructionFormat = %s%nexec GIT_COMMITTER_DATE=\"%cI\" GIT_COMMITTER_NAME=\"%cN\" GIT_COMMITTER_EMAIL=\"%cE\" git commit --amend --no-edit%n
