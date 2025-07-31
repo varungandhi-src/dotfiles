@@ -1,2 +1,32 @@
 add_newline = false
 
+[directory]
+truncation_length = 0
+truncate_to_repo = false
+
+[git_state]
+format = '[$state( $progress_current/$progress_total)]($style) '
+
+[git_status]
+ahead = "↑${count}"
+behind = "↓${count}"
+style = "yellow"
+stashed = ""
+modified = "!${count}"
+staged = "+${count}"
+
+[golang]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[python]
+disabled = true
+
+[rust]
+disabled = true
+
+[gcloud]
+disabled = true
+
