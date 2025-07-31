@@ -6,6 +6,7 @@ if status is-interactive
     # Aliases
     alias ls='eza'
     alias sys_ls='/usr/bin/ls'
+    alias bl='git-branchless'
 end
 /Users/varun/.local/bin/mise activate fish | source
 
