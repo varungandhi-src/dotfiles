@@ -5,6 +5,7 @@ if status is-interactive
     
     # Aliases
     alias ls='eza'
+    alias cat='bat'
     alias sys_ls='/usr/bin/ls'
     alias bl='git-branchless'
 end
