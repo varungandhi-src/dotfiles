@@ -15,18 +15,21 @@ mkdir -p "$CONFIG_DIR"
 echo "Removing existing symlinks..."
 rm -rf "$CONFIG_DIR/fish"
 rm -rf "$CONFIG_DIR/tmux"
+rm -rf "$CONFIG_DIR/ghostty"
 rm -f "$CONFIG_DIR/starship.toml"
 
 # Create new symlinks
 echo "Creating new symlinks..."
 ln -sf "$DOTFILES_DIR/.config/fish" "$CONFIG_DIR/fish"
 ln -sf "$DOTFILES_DIR/.config/tmux" "$CONFIG_DIR/tmux"
+ln -sf "$DOTFILES_DIR/.config/ghostty" "$CONFIG_DIR/ghostty"
 ln -sf "$DOTFILES_DIR/.config/starship.toml" "$CONFIG_DIR/starship.toml"
 
 # Verify symlinks
 echo "Verifying symlinks..."
 ls -la "$CONFIG_DIR/fish"
 ls -la "$CONFIG_DIR/tmux"
+ls -la "$CONFIG_DIR/ghostty"
 ls -la "$CONFIG_DIR/starship.toml"
 
 echo "Symlink setup complete!"
